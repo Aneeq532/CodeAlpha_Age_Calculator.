@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date of Birth</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js "></script>
+</head>
+
+<body>
+    <div class="welcome">
+        <h1>Welcome to Calculate your age</h1>
+    </div>
+
+
+    <div class="Calculator" id="Dateofform">
+        <p>Enter you Date of birth to calculate your age</p>
+        <p id="hi">Date : <input type="date" name="date" id="date"> </p>
+        <button onclick="DateCalculator()" id="hi1">calculate</button>
+        <button onclick="DataReset()" id="hi2">Reset</button>
+    </div>
+    <div class="main-container">
+        <h4 id="result">Your age is : </h4>
+        <p id="days">Days you spend on Earth : </p>
+        <p id="months">Months you spend on Earth : </p>
+        <p id="years">Years you spend on Earth : </p>
+    </div>
+
+    <script>
+        function DateCalculator() {
+            const dateInput = document.getElementById("date").value;
+
+            if (!dateInput) {
+                document.getElementById("result").textContent = "Please enter a valid date of birth.";
+                return;
+            }
+
+            const dob = new Date(dateInput);
+            const currentDate = new Date();
+
+            // For calculation of total years, months, and days
+            let years = currentDate.getFullYear() - dob.getFullYear();
+            let months = currentDate.getMonth() - dob.getMonth();
+            let days = currentDate.getDate() - dob.getDate();
+
+            if (days < 0) {
+                months--;
+                days += new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // For calculation of total days and months spent on Earth
+            const totalDays = Math.floor((currentDate - dob) / (1000 * 60 * 60 * 24));
+            const totalMonths = years * 12 + months;
+
+            // Update results in the HTML
+            document.getElementById("result").textContent = `Your age is: ${years} years.`;
+            document.getElementById("days").textContent = `Days you spent on Earth: ${totalDays}`;
+            document.getElementById("months").textContent = `Months you spent on Earth: ${totalMonths}`;
+            document.getElementById("years").textContent = `Years you spent on Earth: ${years}`;
+        }
+
+
+        //function to reset the page
+        function DataReset() {
+            const userconfirm = confirm("Are you sure want to reset the date?");
+
+            if (userconfirm) {
+
+
+                document.getElementById("date").value = "";
+                document.getElementById("result").textContent = "Your age is : ";
+                document.getElementById("days").textContent = "Days you spend on Earth : ";
+                document.getElementById("months").textContent = "Months you spend on Earth : ";
+                document.getElementById("years").textContent = "Years you spend on Earth : ";
+            } else {
+                return
+            }
+        }
+    </script>
+</body>
+
+</html>
